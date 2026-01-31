@@ -1,3 +1,5 @@
+alert("JS loaded");
+
 window.onload = () => {
   const video = document.getElementById('video');
   const statusText = document.getElementById('status');
@@ -24,3 +26,4 @@ window.onload = () => {
     }, 3000);
   }
 };
+
