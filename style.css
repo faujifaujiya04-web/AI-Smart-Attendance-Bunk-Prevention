@@ -1,14 +1,36 @@
 body {
+  font-family: Arial, sans-serif;
   text-align: center;
-  font-family: Arial;
+  background: #f4f4f4;
 }
+
+h2 {
+  margin-top: 20px;
+}
+
 video {
+  width: 70%;
+  max-width: 500px;
   border: 2px solid #000;
-}
-.controls {
   margin-top: 10px;
 }
+
+.controls {
+  margin-top: 15px;
+}
+
 button {
-  padding: 10px 16px;
+  padding: 10px 20px;
   font-size: 16px;
+  cursor: pointer;
+}
+
+#status {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#attendance {
+  font-size: 18px;
+  margin-top: 5px;
 }
