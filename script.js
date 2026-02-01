@@ -1,6 +1,9 @@
 const video = document.getElementById("video");
 const startBtn = document.getElementById("startBtn");
 const statusText = document.getElementById("status");
+const attendanceText = document.getElementById("attendance");
+
+let attendanceStarted = false;
 
 // Camera start
 async function startCamera() {
@@ -8,15 +11,22 @@ async function startCamera() {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     video.srcObject = stream;
   } catch (err) {
-    alert("Camera access denied");
+    alert("Camera permission denied");
   }
 }
 
 // Button click
-startBtn.addEventListener("click", () => {
-  statusText.innerText = "Status: Attendance Started ✅";
-  statusText.style.color = "green";
-});
+startBtn.addEventListener("click", async () => {
+  statusText.innerText = "Status: Attendance Started";
+  attendanceText.innerText = "Attendance: Present ✅";
+  attendanceStarted = true;
+  await startCamera();
 
-// Auto start camera
-startCamera();
+  // Demo absent logic
+  setTimeout(() => {
+    if (attendanceStarted) {
+      attendanceText.innerText = "Attendance: Absent ❌";
+      statusText.innerText = "Status: Bunk Alert ⚠️";
+    }
+  }, 15000); // 15 seconds
+});
