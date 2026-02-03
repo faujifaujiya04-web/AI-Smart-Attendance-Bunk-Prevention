@@ -1,39 +1,26 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>AI Smart Attendance</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h2>AI Smart Attendance System</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Smart Attendance</title>
+  <style>
+    body { font-family: Arial; text-align: center; }
+    video { border: 2px solid black; }
+    #status { font-size: 20px; margin: 10px; }
+  </style>
+</head>
+<body>
 
-    <video id="video" autoplay muted></video>
+  <h2>AI Smart Attendance System</h2>
 
-    <div class="controls">
-      <button id="startBtn">Start Attendance</button>
-      <p id="status">Status: Not Started</p>
-      <p id="attendance">Attendance: --</p>
-    </div>
+  <video id="video" width="300" height="220" autoplay></video>
 
-    <table id="attTable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Student 1</td>
-          <td id="rowStatus">--</td>
-        </tr>
-      </tbody>
-    </table>
+  <div id="status">Status: Not Started</div>
 
-    <h3>Attendance History</h3>
-    <ul id="history"></ul>
+  <button onclick="startAttendance()">Start Attendance</button>
 
-    <script src="script.js"></script>
-  </body>
+  <h3>Attendance History</h3>
+  <ul id="history"></ul>
+
+  <script src="script.js"></script>
+</body>
 </html>
