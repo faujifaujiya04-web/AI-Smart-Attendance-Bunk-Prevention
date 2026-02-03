@@ -1,37 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>AI Smart Attendance</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h2>AI Smart Attendance System</h2>
-  <video id="video" autoplay muted></video>
-  <div class="controls">
-    <button id="startBtn">Start Attendance</button>
-    <p id="status">Status: Not Started</p>
-    <p id="attendance">Attendance: --</p>
-  </div>
-  <table id="attTable">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Student 1</td>
-      <td id="rowStatus">--</td>
-    </tr>
-  </tbody>
-</table>
-  <h3>Attendance History</h3>
-<ul id="history"></ul>
-  <script src="script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI Smart Attendance</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h2>AI Smart Attendance System</h2>
+
+    <video id="video" autoplay muted></video>
+
+    <div class="controls">
+      <button id="startBtn">Start Attendance</button>
+      <p id="status">Status: Not Started</p>
+      <p id="attendance">Attendance: --</p>
+    </div>
+
+    <table id="attTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Student 1</td>
+          <td id="rowStatus">--</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Attendance History</h3>
+    <ul id="history"></ul>
+
+    <script src="script.js"></script>
+  </body>
 </html>
-
-
-
