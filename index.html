@@ -3,36 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <title>AI Smart Attendance</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-    }
-    video {
-      border: 2px solid #000;
-      margin-top: 10px;
-    }
-    #status {
-      margin: 10px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h2>AI Smart Attendance System</h2>
+  <h1>AI Smart Attendance System</h1>
 
-  <video id="video" width="320" height="240" autoplay muted></video>
+  <video id="video" autoplay muted></video>
 
-  <div id="status">Status: Not Started</div>
+  <h2 id="status" class="present">Status: Not Started</h2>
 
   <button id="startBtn">Start Attendance</button>
 
   <h3>Attendance History</h3>
   <ul id="history"></ul>
 
-  <!-- IMPORTANT: script at END -->
+  <!-- Face API -->
+  <script src="https://unpkg.com/face-api.js"></script>
+
+  <!-- Main Script MUST BE LAST -->
   <script src="script.js"></script>
+
 </body>
 </html>
