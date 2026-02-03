@@ -18,6 +18,8 @@ function markPresent() {
   statusText.innerText = "Status: Attendance Started";
   rowStatus.innerText = "Present";
   rowStatus.style.color = "green";
+  saveHistory("Present");
+
 }
 
 function markAbsent() {
@@ -25,6 +27,8 @@ function markAbsent() {
   statusText.innerText = "Status: Bunk Alert ⚠️";
   rowStatus.innerText = "Absent";
   rowStatus.style.color = "red";
+  saveHistory("Absent");
+
 }
 
 function markPresent() {
@@ -54,4 +58,5 @@ startBtn.addEventListener("click", async () => {
     }
   }, 15000);
 });
+
 
