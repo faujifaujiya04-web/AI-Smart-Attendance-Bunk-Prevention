@@ -1,73 +1,46 @@
-// ELEMENTS
-const video = document.getElementById("video");
-const statusText = document.getElementById("status");
-const historyList = document.getElementById("history");
-const startBtn = document.getElementById("startBtn");
-
-let stream = null;
-let started = false;
-
-// START ATTENDANCE
-startBtn.addEventListener("click", async () => {
-  if (started) return;
-
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    video.srcObject = stream;
-    started = true;
-
-    setStatus("Present");
-    saveHistory("Present");
-  } catch (e) {
-    statusText.innerText = "Camera permission denied";
-  }
-});
-
-// STATUS UPDATE
-function setStatus(text) {
-  statusText.innerText = "Status: " + text;
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f2f6ff;
 }
 
-// TAB CHANGE → ABSENT
-document.addEventListener("visibilitychange", () => {
-  if (started && document.hidden) {
-    setStatus("Absent");
-    saveHistory("Absent");
-  }
-});
-
-// CAMERA STOP → ABSENT
-video.addEventListener("ended", () => {
-  if (started) {
-    setStatus("Absent");
-    saveHistory("Absent");
-  }
-});
-
-// -------- HISTORY (LOCALSTORAGE) --------
-function saveHistory(status) {
-  const now = new Date().toLocaleString();
-  const entry = `${now} - ${status}`;
-
-  let history = JSON.parse(localStorage.getItem("attendanceHistory"));
-  if (!Array.isArray(history)) history = [];
-
-  history.push(entry);
-  localStorage.setItem("attendanceHistory", JSON.stringify(history));
-
-  renderHistory();
+h1 {
+  color: #2c3e50;
 }
 
-function renderHistory() {
-  historyList.innerHTML = "";
-  const history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
-
-  history.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    historyList.appendChild(li);
-  });
+video {
+  width: 360px;
+  height: 260px;
+  border: 4px solid #2c3e50;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
-// LOAD HISTORY ON PAGE LOAD
-renderHistory();
+.present {
+  color: green;
+}
+
+.absent {
+  color: red;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#history {
+  list-style: none;
+  padding: 0;
+}
+
+#history li {
+  background: #fff;
+  margin: 5px auto;
+  width: 320px;
+  padding: 6px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
