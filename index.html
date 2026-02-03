@@ -2,26 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AI Smart Attendance</title>
+  <title>AI Smart Attendance System</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <h1>AI Smart Attendance System</h1>
 
-  <video id="video" autoplay muted></video>
+  <div class="container">
+    <video id="video" autoplay muted playsinline></video>
 
-  <h2 id="status" class="present">Status: Not Started</h2>
+    <p id="status" class="not-started">Status: Not Started</p>
 
-  <button id="startBtn">Start Attendance</button>
+    <button id="startBtn">Start Attendance</button>
 
-  <h3>Attendance History</h3>
-  <ul id="history"></ul>
+    <h3>Attendance History</h3>
+    <ul id="history"></ul>
+  </div>
 
-  <!-- Face API -->
+  <!-- JS ALWAYS BOTTOM -->
   <script src="https://unpkg.com/face-api.js"></script>
-
-  <!-- Main Script MUST BE LAST -->
   <script src="script.js"></script>
 
 </body>
