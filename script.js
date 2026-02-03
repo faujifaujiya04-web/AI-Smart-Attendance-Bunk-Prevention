@@ -1,46 +1,63 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #f2f6ff;
+const video = document.getElementById("video");
+const statusText = document.getElementById("status");
+const historyList = document.getElementById("history");
+const startBtn = document.getElementById("startBtn");
+
+let attendanceStarted = false;
+let absentTimer = null;
+
+// Load models
+Promise.all([
+  faceapi.nets.tinyFaceDetector.loadFromUri(
+    "https://justadudewhohacks.github.io/face-api.js/models"
+  )
+]).then(startCamera);
+
+function startCamera() {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      video.srcObject = stream;
+    });
 }
 
-h1 {
-  color: #2c3e50;
+startBtn.addEventListener("click", () => {
+  attendanceStarted = true;
+  statusText.textContent = "Status: Started";
+  statusText.className = "present";
+  detectFace();
+});
+
+function detectFace() {
+  if (!attendanceStarted) return;
+
+  setInterval(async () => {
+    const detection = await faceapi.detectSingleFace(
+      video,
+      new faceapi.TinyFaceDetectorOptions()
+    );
+
+    if (detection) {
+      clearTimeout(absentTimer);
+      markStatus("Present");
+    } else {
+      if (!absentTimer) {
+        absentTimer = setTimeout(() => {
+          markStatus("Absent");
+          absentTimer = null;
+        }, 5000); // 5 seconds buffer
+      }
+    }
+  }, 1000);
 }
 
-video {
-  width: 360px;
-  height: 260px;
-  border: 4px solid #2c3e50;
-  border-radius: 10px;
-  margin-top: 10px;
+function markStatus(state) {
+  const time = new Date().toLocaleString();
+
+  statusText.textContent = `Status: ${state}`;
+  statusText.className = state === "Present" ? "present" : "absent";
+
+  const li = document.createElement("li");
+  li.textContent = `${time} - ${state}`;
+  historyList.prepend(li);
 }
 
-.present {
-  color: green;
-}
-
-.absent {
-  color: red;
-}
-
-button {
-  padding: 10px 20px;
-  margin-top: 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-#history {
-  list-style: none;
-  padding: 0;
-}
-
-#history li {
-  background: #fff;
-  margin: 5px auto;
-  width: 320px;
-  padding: 6px;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
-}
