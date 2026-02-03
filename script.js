@@ -27,6 +27,20 @@ function markAbsent() {
   rowStatus.style.color = "red";
 }
 
+function markPresent() {
+  attendanceText.innerText = "Attendance: Present ✅";
+  statusText.innerText = "Status: Attendance Started";
+  rowStatus.innerText = "Present";
+  rowStatus.style.color = "green";
+}
+
+function markAbsent() {
+  attendanceText.innerText = "Attendance: Absent ❌";
+  statusText.innerText = "Status: Bunk Alert ⚠️";
+  rowStatus.innerText = "Absent";
+  rowStatus.style.color = "red";
+}
+
 // Button
 startBtn.addEventListener("click", async () => {
   attendanceStarted = true;
@@ -40,3 +54,4 @@ startBtn.addEventListener("click", async () => {
     }
   }, 15000);
 });
+
