@@ -1,37 +1,41 @@
 const video = document.getElementById("video");
-const startBtn = document.getElementById("startBtn");
 const statusText = document.getElementById("status");
-const attendanceText = document.getElementById("attendance");
-const rowStatus = document.getElementById("rowStatus");
-
-let attendanceStarted = false;
-
-// Camera
-async function startCamera() {
-  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-  video.srcObject = stream;
-}
-
-// Helpers
-function markPresent() {
-  attendanceText.innerText = "Attendance: Present ✅";
-  statusText.innerText = "Status: Attendance Started";
-  rowStatus.innerText = "Present";
-  rowStatus.style.color = "green";
-  saveHistory("Present");
-}
-
-function markAbsent() {
-  attendanceText.innerText = "Attendance: Absent ❌";
-  statusText.innerText = "Status: Bunk Alert ⚠️";
-  rowStatus.innerText = "Absent";
-  rowStatus.style.color = "red";
-  saveHistory("Absent");
-}
-
-// ===== Attendance History =====
 const historyList = document.getElementById("history");
 
+let streamStarted = false;
+
+// CAMERA START
+function startAttendance() {
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      video.srcObject = stream;
+      streamStarted = true;
+      statusText.innerText = "Status: Present";
+      saveHistory("Present");
+    })
+    .catch(err => {
+      statusText.innerText = "Camera access denied";
+    });
+}
+
+// ⚠️ FACE / HAND CLOSE ISSUE FIX
+// camera OFF / tab change / fully stop only = Absent
+video.addEventListener("pause", () => {
+  if (streamStarted) {
+    statusText.innerText = "Status: Absent";
+    saveHistory("Absent");
+  }
+});
+
+// TAB CHANGE → Absent
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && streamStarted) {
+    statusText.innerText = "Status: Absent";
+    saveHistory("Absent");
+  }
+});
+
+// -------- HISTORY LOGIC --------
 function saveHistory(status) {
   const date = new Date().toLocaleString();
   const record = `${date} - ${status}`;
@@ -46,26 +50,13 @@ function saveHistory(status) {
 function showHistory() {
   historyList.innerHTML = "";
   const history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
-  history.forEach((item) => {
+
+  history.forEach(item => {
     const li = document.createElement("li");
     li.innerText = item;
     historyList.appendChild(li);
   });
 }
 
-// page load‑la history show
+// PAGE LOAD
 showHistory();
-
-// Button
-startBtn.addEventListener("click", async () => {
-  attendanceStarted = true;
-  await startCamera();
-  markPresent();
-
-  // Demo bunk logic after 15s
-  setTimeout(() => {
-    if (attendanceStarted) {
-      markAbsent();
-    }
-  }, 15000);
-});
