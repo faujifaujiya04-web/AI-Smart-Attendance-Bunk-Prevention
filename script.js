@@ -1,62 +1,73 @@
+// ELEMENTS
 const video = document.getElementById("video");
 const statusText = document.getElementById("status");
 const historyList = document.getElementById("history");
+const startBtn = document.getElementById("startBtn");
 
-let streamStarted = false;
+let stream = null;
+let started = false;
 
-// CAMERA START
-function startAttendance() {
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-      video.srcObject = stream;
-      streamStarted = true;
-      statusText.innerText = "Status: Present";
-      saveHistory("Present");
-    })
-    .catch(err => {
-      statusText.innerText = "Camera access denied";
-    });
+// START ATTENDANCE
+startBtn.addEventListener("click", async () => {
+  if (started) return;
+
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+    started = true;
+
+    setStatus("Present");
+    saveHistory("Present");
+  } catch (e) {
+    statusText.innerText = "Camera permission denied";
+  }
+});
+
+// STATUS UPDATE
+function setStatus(text) {
+  statusText.innerText = "Status: " + text;
 }
 
-// ⚠️ FACE / HAND CLOSE ISSUE FIX
-// camera OFF / tab change / fully stop only = Absent
-video.addEventListener("pause", () => {
-  if (streamStarted) {
-    statusText.innerText = "Status: Absent";
-    saveHistory("Absent");
-  }
-});
-
-// TAB CHANGE → Absent
+// TAB CHANGE → ABSENT
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden && streamStarted) {
-    statusText.innerText = "Status: Absent";
+  if (started && document.hidden) {
+    setStatus("Absent");
     saveHistory("Absent");
   }
 });
 
-// -------- HISTORY LOGIC --------
-function saveHistory(status) {
-  const date = new Date().toLocaleString();
-  const record = `${date} - ${status}`;
+// CAMERA STOP → ABSENT
+video.addEventListener("ended", () => {
+  if (started) {
+    setStatus("Absent");
+    saveHistory("Absent");
+  }
+});
 
-  let history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
-  history.push(record);
+// -------- HISTORY (LOCALSTORAGE) --------
+function saveHistory(status) {
+  const now = new Date().toLocaleString();
+  const entry = `${now} - ${status}`;
+
+  let history = JSON.parse(localStorage.getItem("attendanceHistory"));
+  if (!Array.isArray(history)) history = [];
+
+  history.push(entry);
   localStorage.setItem("attendanceHistory", JSON.stringify(history));
 
-  showHistory();
+  renderHistory();
 }
 
-function showHistory() {
+function renderHistory() {
   historyList.innerHTML = "";
   const history = JSON.parse(localStorage.getItem("attendanceHistory")) || [];
 
   history.forEach(item => {
     const li = document.createElement("li");
-    li.innerText = item;
+    li.textContent = item;
     historyList.appendChild(li);
   });
 }
 
-// PAGE LOAD
-showHistory();
+// LOAD HISTORY ON PAGE LOAD
+renderHistory();
