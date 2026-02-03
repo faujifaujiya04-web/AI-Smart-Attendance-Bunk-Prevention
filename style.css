@@ -1,51 +1,63 @@
 body {
   font-family: Arial, sans-serif;
-  text-align: center;
-  background: #f4f4f4;
+  background: #f2f4f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-h2 {
-  margin-top: 20px;
+.container {
+  background: #ffffff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  width: 360px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 video {
-  width: 70%;
-  max-width: 500px;
+  width: 100%;
   border: 2px solid #000;
+  border-radius: 6px;
   margin-top: 10px;
-}
-
-.controls {
-  margin-top: 15px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
 }
 
 #status {
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-#attendance {
+  margin: 12px 0;
   font-size: 18px;
-  margin-top: 5px;
+  font-weight: bold;
 }
 
-table {
-  margin: 15px auto;
-  border-collapse: collapse;
-  width: 60%;
-  max-width: 500px;
-  background: #fff;
+button {
+  padding: 10px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
 }
-th, td {
-  border: 1px solid #000;
-  padding: 8px;
+
+button:hover {
+  background: #0056b3;
 }
-th {
-  background: #ddd;
+
+h3 {
+  margin-top: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+li {
+  background: #e9ecef;
+  margin: 6px 0;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 14px;
 }
