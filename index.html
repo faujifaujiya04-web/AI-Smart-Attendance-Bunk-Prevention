@@ -1,26 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>AI Smart Attendance</title>
   <style>
-    body { font-family: Arial; text-align: center; }
-    video { border: 2px solid black; }
-    #status { font-size: 20px; margin: 10px; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    video {
+      border: 2px solid #000;
+      margin-top: 10px;
+    }
+    #status {
+      margin: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
 
   <h2>AI Smart Attendance System</h2>
 
-  <video id="video" width="300" height="220" autoplay></video>
+  <video id="video" width="320" height="240" autoplay muted></video>
 
   <div id="status">Status: Not Started</div>
 
-  <button onclick="startAttendance()">Start Attendance</button>
+  <button id="startBtn">Start Attendance</button>
 
   <h3>Attendance History</h3>
   <ul id="history"></ul>
 
+  <!-- IMPORTANT: script at END -->
   <script src="script.js"></script>
 </body>
 </html>
